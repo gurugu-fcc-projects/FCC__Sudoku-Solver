@@ -134,4 +134,27 @@ suite("UnitTests", () => {
 
     done();
   });
+
+  test("Logic handles a valid region (3x3 grid) placement", done => {
+    const [puzzleString] = puzzlesAndSolutions[0];
+    const data = [
+      { row: "A", column: 2, value: 7 },
+      { row: "B", column: 5, value: 4 },
+      { row: "D", column: 5, value: 4 },
+      { row: "F", column: 4, value: 9 },
+      { row: "H", column: 4, value: 9 },
+    ];
+
+    data.forEach(item => {
+      const result = solver.checkRegionPlacement(
+        puzzleString,
+        item.row,
+        item.column,
+        item.value
+      );
+      assert.isTrue(result);
+    });
+
+    done();
+  });
 });

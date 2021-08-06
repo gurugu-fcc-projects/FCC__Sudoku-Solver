@@ -1,6 +1,17 @@
 class SudokuSolver {
   constructor() {
     this.rows = { A: 0, B: 1, C: 2, D: 3, E: 4, F: 5, G: 6, H: 7, I: 8 };
+    this.grid = [
+      { id: "ABC123", origin: ["A", 1] },
+      { id: "ABC456", origin: ["A", 4] },
+      { id: "ABC789", origin: ["A", 7] },
+      { id: "DEF123", origin: ["D", 1] },
+      { id: "DEF456", origin: ["D", 4] },
+      { id: "DEF789", origin: ["D", 7] },
+      { id: "GHI123", origin: ["G", 1] },
+      { id: "GHI456", origin: ["G", 4] },
+      { id: "GHI789", origin: ["G", 7] },
+    ];
   }
 
   validate(puzzleString) {
@@ -35,7 +46,20 @@ class SudokuSolver {
     return !fragment.join("").includes(value);
   }
 
-  checkRegionPlacement(puzzleString, row, column, value) {}
+  checkRegionPlacement(puzzleString, row, column, value) {
+    const { origin } = this.grid.find(
+      item => item.id.includes(row) && item.id.includes(column)
+    );
+    const area = [];
+    let startingPoint = this.rows[origin[0]] * 9 + origin[1] - 1;
+
+    while (area.length < 3) {
+      area.push(puzzleString.slice(startingPoint, startingPoint + 3));
+      startingPoint = startingPoint + 9;
+    }
+
+    return !area.join("").includes(value);
+  }
 
   solve(puzzleString) {}
 }
