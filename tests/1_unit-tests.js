@@ -25,7 +25,7 @@ suite("UnitTests", () => {
 
     puzzleStrings.forEach(puzzleString => {
       const result = solver.validate(puzzleString);
-      assert.equal(result, "Not good");
+      assert.equal(result, "Invalid characters in puzzle");
     });
 
     done();
@@ -39,7 +39,29 @@ suite("UnitTests", () => {
 
     puzzleStrings.forEach(puzzleString => {
       const result = solver.validate(puzzleString);
-      assert.equal(result, "Length is not good");
+      assert.equal(result, "Expected puzzle to be 81 characters long");
+    });
+
+    done();
+  });
+
+  test("Logic handles a valid row placement", done => {
+    const [puzzleString] = puzzlesAndSolutions[0];
+    const data = [
+      { row: "A", column: 2, value: 3 },
+      { row: "A", column: 4, value: 6 },
+      { row: "A", column: 4, value: 7 },
+      { row: "C", column: 4, value: 6 },
+    ];
+
+    data.forEach(item => {
+      const result = solver.checkRowPlacement(
+        puzzleString,
+        item.row,
+        item.column,
+        item.value
+      );
+      assert.isTrue(result);
     });
 
     done();
