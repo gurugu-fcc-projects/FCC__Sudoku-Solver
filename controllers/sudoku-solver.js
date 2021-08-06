@@ -1,5 +1,9 @@
 class SudokuSolver {
   validate(puzzleString) {
+    if (puzzleString.length !== 81) {
+      return "Length is not good";
+    }
+
     const regExp = new RegExp(/^(\d?|\.?)+$/);
     const testResults = regExp.test(puzzleString);
 
