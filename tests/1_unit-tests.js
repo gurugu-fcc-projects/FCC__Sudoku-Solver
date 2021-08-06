@@ -157,4 +157,27 @@ suite("UnitTests", () => {
 
     done();
   });
+
+  test("Logic handles an invalid region (3x3 grid) placement", done => {
+    const [puzzleString] = puzzlesAndSolutions[0];
+    const data = [
+      { row: "A", column: 2, value: 1 },
+      { row: "B", column: 5, value: 1 },
+      { row: "D", column: 5, value: 3 },
+      { row: "F", column: 4, value: 2 },
+      { row: "H", column: 4, value: 4 },
+    ];
+
+    data.forEach(item => {
+      const result = solver.checkRegionPlacement(
+        puzzleString,
+        item.row,
+        item.column,
+        item.value
+      );
+      assert.isFalse(result);
+    });
+
+    done();
+  });
 });
