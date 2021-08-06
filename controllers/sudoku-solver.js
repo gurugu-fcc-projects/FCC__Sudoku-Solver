@@ -61,7 +61,20 @@ class SudokuSolver {
     return !area.join("").includes(value);
   }
 
-  solve(puzzleString) {}
+  solve(puzzleString) {
+    const errors = [
+      "Invalid puzzle string",
+      "Expected puzzle to be 81 characters long",
+      "Invalid characters in puzzle",
+    ];
+    const validation = this.validate(puzzleString);
+
+    if (errors.includes(validation)) {
+      return { error: validation };
+    }
+
+    return { valid: true };
+  }
 }
 
 module.exports = SudokuSolver;

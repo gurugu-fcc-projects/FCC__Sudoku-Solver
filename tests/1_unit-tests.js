@@ -180,4 +180,31 @@ suite("UnitTests", () => {
 
     done();
   });
+
+  test("Valid puzzle strings pass the solver", done => {
+    const [puzzleStrings] = puzzlesAndSolutions;
+
+    puzzleStrings.forEach(puzzleString => {
+      const result = solver.solve(puzzleString);
+      assert.property(result, "valid");
+    });
+
+    done();
+  });
+
+  test("Invalid puzzle strings fail the solver", done => {
+    const puzzleStrings = [
+      "1.5..2.84..63.12.7.2..5...,.9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.",
+      "1.5..2.84..63.12.7.2..5.....9..1....-.2.3674.3.7.2..9.47...8..1..16....926914.37.",
+      "1.5..2.84..63.12.7.2..5.....9..1....8.2.367fd3.7.2..9.47...8..1..16....926a14.37.",
+      "1.5..2.84..63.12.7.2..5.....9+1=10..8.2.3674.3.7.2..9.47...8..1..16....926914.37.",
+    ];
+
+    puzzleStrings.forEach(puzzleString => {
+      const result = solver.solve(puzzleString);
+      assert.property(result, "error");
+    });
+
+    done();
+  });
 });
