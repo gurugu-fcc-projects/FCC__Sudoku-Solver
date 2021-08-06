@@ -70,11 +70,10 @@ suite("UnitTests", () => {
   test("Logic handles an invalid row placement", done => {
     const [puzzleString] = puzzlesAndSolutions[0];
     const data = [
-      { row: "A", column: 2, value: 3 },
-      { row: "B", column: 5, value: 4 },
-      { row: "D", column: 5, value: 4 },
-      { row: "C", column: 4, value: 7 },
-      { row: "H", column: 4, value: 7 },
+      { row: "A", column: 2, value: 1 },
+      { row: "A", column: 4, value: 8 },
+      { row: "A", column: 4, value: 1 },
+      { row: "C", column: 4, value: 2 },
     ];
 
     data.forEach(item => {
@@ -84,7 +83,53 @@ suite("UnitTests", () => {
         item.column,
         item.value
       );
+      assert.isFalse(result);
+    });
+
+    done();
+  });
+
+  test("Logic handles a valid column placement", done => {
+    const [puzzleString] = puzzlesAndSolutions[0];
+    const data = [
+      { row: "A", column: 2, value: 3 },
+      { row: "B", column: 5, value: 6 },
+      { row: "D", column: 5, value: 6 },
+      { row: "C", column: 4, value: 7 },
+      { row: "H", column: 4, value: 7 },
+    ];
+
+    data.forEach(item => {
+      const result = solver.checkColPlacement(
+        puzzleString,
+        item.row,
+        item.column,
+        item.value
+      );
       assert.isTrue(result);
+    });
+
+    done();
+  });
+
+  test("Logic handles an invalid column placement", done => {
+    const [puzzleString] = puzzlesAndSolutions[0];
+    const data = [
+      { row: "A", column: 2, value: 6 },
+      { row: "B", column: 5, value: 1 },
+      { row: "D", column: 5, value: 2 },
+      { row: "C", column: 4, value: 6 },
+      { row: "H", column: 4, value: 3 },
+    ];
+
+    data.forEach(item => {
+      const result = solver.checkColPlacement(
+        puzzleString,
+        item.row,
+        item.column,
+        item.value
+      );
+      assert.isFalse(result);
     });
 
     done();
