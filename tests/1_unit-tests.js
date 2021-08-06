@@ -14,4 +14,21 @@ suite("UnitTests", () => {
     assert.equal(result, "All is good");
     done();
   });
+
+  test("Logic handles a puzzle string with invalid characters (not 1-9 or .)", done => {
+    const puzzleStrings = [
+      "1231231.....,.....",
+      "1231231.....-.....",
+      "1231231...dsd....d.ds.",
+      "hello",
+      "1+5=15",
+    ];
+
+    puzzleStrings.forEach(puzzleString => {
+      const result = solver.validate(puzzleString);
+      assert.equal(result, "Not good");
+    });
+
+    done();
+  });
 });
