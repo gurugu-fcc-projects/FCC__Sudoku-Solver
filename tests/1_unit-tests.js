@@ -66,4 +66,27 @@ suite("UnitTests", () => {
 
     done();
   });
+
+  test("Logic handles an invalid row placement", done => {
+    const [puzzleString] = puzzlesAndSolutions[0];
+    const data = [
+      { row: "A", column: 2, value: 3 },
+      { row: "B", column: 5, value: 4 },
+      { row: "D", column: 5, value: 4 },
+      { row: "C", column: 4, value: 7 },
+      { row: "H", column: 4, value: 7 },
+    ];
+
+    data.forEach(item => {
+      const result = solver.checkRowPlacement(
+        puzzleString,
+        item.row,
+        item.column,
+        item.value
+      );
+      assert.isTrue(result);
+    });
+
+    done();
+  });
 });

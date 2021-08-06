@@ -24,7 +24,16 @@ class SudokuSolver {
     return !fragment.includes(value);
   }
 
-  checkColPlacement(puzzleString, row, column, value) {}
+  checkColPlacement(puzzleString, row, column, value) {
+    const fragment = [];
+    const startingPoint = column - 1;
+
+    for (let i = startingPoint; i < puzzleString.length; i += 9) {
+      fragment.push(puzzleString[i]);
+    }
+
+    return !fragment.join("").includes(value);
+  }
 
   checkRegionPlacement(puzzleString, row, column, value) {}
 
