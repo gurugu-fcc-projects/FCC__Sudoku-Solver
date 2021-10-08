@@ -84,5 +84,16 @@ suite("Sudoku Solver", () => {
       expect(emptyPositions.length).to.equal(43);
       expect(emptyPositions).to.eql(expectedEmptyPositions);
     });
+
+    suite("#checkRowPlacement()", () => {
+      test("should check that each value in the row does not equal the input", () => {
+        expect(solver.checkRowPlacement(parsedBoard, 0, 1)).to.not.be.ok();
+        expect(solver.checkRowPlacement(parsedBoard, 1, 8)).to.be.ok();
+        expect(solver.checkRowPlacement(parsedBoard, 2, 7)).to.be.ok();
+        expect(solver.checkRowPlacement(parsedBoard, 3, 9)).to.not.be.ok();
+        expect(solver.checkRowPlacement(parsedBoard, 4, 4)).to.not.be.ok();
+        expect(solver.checkRowPlacement(parsedBoard, 7, 5)).to.be.ok();
+      });
+    });
   });
 });
