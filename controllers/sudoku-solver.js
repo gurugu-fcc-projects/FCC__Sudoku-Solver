@@ -59,10 +59,8 @@ class SudokuSolver {
     }
   }
 
-  checkRowPlacement(puzzleString, row, column, value) {
-    const startingPoint = this.rows[row] * 9;
-    const fragment = puzzleString.slice(startingPoint, startingPoint + 9);
-    return !fragment.includes(value);
+  checkRowPlacement(parsedBoard, row, value) {
+    return !parsedBoard[row].includes(value);
   }
 
   checkColPlacement(puzzleString, row, column, value) {
