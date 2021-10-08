@@ -30,6 +30,20 @@ class SudokuSolver {
     return boardArray;
   }
 
+  saveEmptyPositions(parsedBoard) {
+    const emptyPositions = [];
+
+    for (let i = 0; i < parsedBoard.length; i++) {
+      for (let j = 0; j < parsedBoard[i].length; j++) {
+        if (parsedBoard[i][j] === 0) {
+          emptyPositions.push([i, j]);
+        }
+      }
+    }
+
+    return emptyPositions;
+  }
+
   validate(puzzleString) {
     if (puzzleString.length !== 81) {
       return "Expected puzzle to be 81 characters long";
