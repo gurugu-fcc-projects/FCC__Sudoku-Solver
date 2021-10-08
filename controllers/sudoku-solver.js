@@ -14,6 +14,22 @@ class SudokuSolver {
     ];
   }
 
+  parseBoard(boardString) {
+    let newBoard = boardString.replace(/\./g, "0");
+    let boardArray = [];
+
+    for (let i = 0; i < newBoard.length; i += 9) {
+      boardArray.push(
+        newBoard
+          .slice(i, i + 9)
+          .split("")
+          .map(Number)
+      );
+    }
+
+    return boardArray;
+  }
+
   validate(puzzleString) {
     if (puzzleString.length !== 81) {
       return "Expected puzzle to be 81 characters long";
@@ -48,7 +64,7 @@ class SudokuSolver {
 
   checkRegionPlacement(puzzleString, row, column, value) {
     const { origin } = this.grid.find(
-      item => item.id.includes(row) && item.id.includes(column)
+      (item) => item.id.includes(row) && item.id.includes(column)
     );
     const area = [];
     let startingPoint = this.rows[origin[0]] * 9 + origin[1] - 1;
@@ -73,7 +89,62 @@ class SudokuSolver {
       return { error: validation };
     }
 
-    return { valid: true };
+    const puzzleArray = puzzleString.split("");
+    // const puzzleArray2 = puzzleString.split("").reduce(
+    //   (acc, item) => {
+    //     if (acc[acc.length - 1].length < 9) {
+    //       acc[acc.length - 1].push(item);
+    //       return acc;
+    //     } else {
+    //       return [...acc, [item]];
+    //     }
+    //   },
+    //   [[]]
+    // );
+    // const puzzleArray3 = [];
+    // for (let i = 0; i < puzzleString.length; i += 9) {
+    //   puzzleArray3.push(puzzleString.slice(i, i + 9).split(""));
+    // }
+
+    // for (let i = 0; i < puzzleArray.length; i++) {
+    //   const item = puzzleArray[i];
+
+    //   if (item === ".") {
+    //     const column = (i + 1) % 9 || 9;
+    //     const row = (i - (i % 9)) / 9;
+    //     const rowToLetter = Object.keys(this.rows).find(
+    //       (key) => this.rows[key] === row
+    //     );
+
+    //     for (let j = 1; j <= 9; j++) {
+    //       if (
+    //         this.checkRowPlacement(
+    //           puzzleArray.join(""),
+    //           rowToLetter,
+    //           column,
+    //           j
+    //         ) &&
+    //         this.checkColPlacement(
+    //           puzzleArray.join(""),
+    //           rowToLetter,
+    //           column,
+    //           j
+    //         ) &&
+    //         this.checkRegionPlacement(
+    //           puzzleArray.join(""),
+    //           rowToLetter,
+    //           column,
+    //           j
+    //         )
+    //       ) {
+    //         puzzleArray[i] = j;
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
+
+    return { valid: true, solution: puzzleString };
   }
 }
 
