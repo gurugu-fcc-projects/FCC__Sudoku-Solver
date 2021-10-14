@@ -63,15 +63,8 @@ class SudokuSolver {
     return !parsedBoard[row].includes(value);
   }
 
-  checkColPlacement(puzzleString, row, column, value) {
-    const fragment = [];
-    const startingPoint = column - 1;
-
-    for (let i = startingPoint; i < puzzleString.length; i += 9) {
-      fragment.push(puzzleString[i]);
-    }
-
-    return !fragment.join("").includes(value);
+  checkColPlacement(parsedBoard, column, value) {
+    return parsedBoard.every((row) => row[column] !== value);
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
