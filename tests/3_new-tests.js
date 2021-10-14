@@ -107,4 +107,15 @@ suite("Sudoku Solver", () => {
       expect(solver.checkColPlacement(parsedBoard, 7, 6)).to.be.ok;
     });
   });
+
+  suite("#checkRegionPlacement()", () => {
+    test("should check that each value in a 3x3 square does not match the input", () => {
+      expect(solver.checkRegionPlacement(parsedBoard, 0, 0, 2)).to.not.be.ok;
+      expect(solver.checkRegionPlacement(parsedBoard, 1, 4, 4)).to.be.ok;
+      expect(solver.checkRegionPlacement(parsedBoard, 2, 7, 6)).to.be.ok;
+      expect(solver.checkRegionPlacement(parsedBoard, 5, 5, 3)).to.not.be.ok;
+      expect(solver.checkRegionPlacement(parsedBoard, 5, 8, 7)).to.not.be.ok;
+      expect(solver.checkRegionPlacement(parsedBoard, 8, 8, 8)).to.be.ok;
+    });
+  });
 });
