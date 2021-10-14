@@ -84,16 +84,27 @@ suite("Sudoku Solver", () => {
       expect(emptyPositions.length).to.equal(43);
       expect(emptyPositions).to.eql(expectedEmptyPositions);
     });
+  });
 
-    suite("#checkRowPlacement()", () => {
-      test("should check that each value in the row does not equal the input", () => {
-        expect(solver.checkRowPlacement(parsedBoard, 0, 1)).to.not.be.ok();
-        expect(solver.checkRowPlacement(parsedBoard, 1, 8)).to.be.ok();
-        expect(solver.checkRowPlacement(parsedBoard, 2, 7)).to.be.ok();
-        expect(solver.checkRowPlacement(parsedBoard, 3, 9)).to.not.be.ok();
-        expect(solver.checkRowPlacement(parsedBoard, 4, 4)).to.not.be.ok();
-        expect(solver.checkRowPlacement(parsedBoard, 7, 5)).to.be.ok();
-      });
+  suite("#checkRowPlacement()", () => {
+    test("should check that each value in the row does not equal the input", () => {
+      expect(solver.checkRowPlacement(parsedBoard, 0, 1)).to.not.be.ok;
+      expect(solver.checkRowPlacement(parsedBoard, 1, 8)).to.be.ok;
+      expect(solver.checkRowPlacement(parsedBoard, 2, 7)).to.be.ok;
+      expect(solver.checkRowPlacement(parsedBoard, 3, 9)).to.not.be.ok;
+      expect(solver.checkRowPlacement(parsedBoard, 4, 4)).to.not.be.ok;
+      expect(solver.checkRowPlacement(parsedBoard, 7, 5)).to.be.ok;
+    });
+  });
+
+  suite("#checkColPlacement()", () => {
+    test("should check that each value in the column does not equal the input", () => {
+      expect(solver.checkColPlacement(parsedBoard, 0, 1)).to.not.be.ok;
+      expect(solver.checkColPlacement(parsedBoard, 1, 5)).to.be.ok;
+      expect(solver.checkColPlacement(parsedBoard, 2, 3)).to.be.ok;
+      expect(solver.checkColPlacement(parsedBoard, 3, 3)).to.not.be.ok;
+      expect(solver.checkColPlacement(parsedBoard, 4, 5)).to.not.be.ok;
+      expect(solver.checkColPlacement(parsedBoard, 7, 6)).to.be.ok;
     });
   });
 });
