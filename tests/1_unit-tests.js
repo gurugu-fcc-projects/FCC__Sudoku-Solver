@@ -76,20 +76,17 @@ suite("UnitTests", () => {
     done();
   });
 
-  test.skip("Logic handles an invalid row placement", (done) => {
-    const [puzzleString] = puzzlesAndSolutions[0];
+  test("Logic handles an invalid row placement", (done) => {
     const data = [
-      { row: "A", column: 2, value: 1 },
-      { row: "A", column: 4, value: 8 },
-      { row: "A", column: 4, value: 1 },
-      { row: "C", column: 4, value: 2 },
+      { row: 0, value: 1 },
+      { row: 3, value: 9 },
+      { row: 4, value: 4 },
     ];
 
     data.forEach((item) => {
       const result = solver.checkRowPlacement(
-        puzzleString,
+        parsedBoard,
         item.row,
-        item.column,
         item.value
       );
       assert.isFalse(result);
