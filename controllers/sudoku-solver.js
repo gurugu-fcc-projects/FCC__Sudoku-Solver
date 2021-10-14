@@ -68,18 +68,30 @@ class SudokuSolver {
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
-    const { origin } = this.grid.find(
-      (item) => item.id.includes(row) && item.id.includes(column)
-    );
-    const area = [];
-    let startingPoint = this.rows[origin[0]] * 9 + origin[1] - 1;
+    let columnCorner = 0;
+    let rowCorner = 0;
+    let squareSize = 3;
 
-    while (area.length < 3) {
-      area.push(puzzleString.slice(startingPoint, startingPoint + 3));
-      startingPoint = startingPoint + 9;
+    // find column corner
+    while (column >= columnCorner + squareSize) {
+      columnCorner += squareSize;
     }
 
-    return !area.join("").includes(value);
+    // find row corner
+    while (row >= rowCorner + squareSize) {
+      rowCorner += squareSize;
+    }
+
+    // check placement
+    for (let i = rowCorner; i < rowCorner + squareSize; i++) {
+      for (let j = columnCorner; j < columnCorner + squareSize; j++) {
+        if (puzzleString[i][j] === value) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   solve(puzzleString) {
