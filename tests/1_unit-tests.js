@@ -5,6 +5,18 @@ const { puzzlesAndSolutions } = require("../controllers/puzzle-strings");
 const Solver = require("../controllers/sudoku-solver.js");
 let solver = new Solver();
 
+const parsedBoard = [
+  [1, 0, 5, 0, 0, 2, 0, 8, 4],
+  [0, 0, 6, 3, 0, 1, 2, 0, 7],
+  [0, 2, 0, 0, 5, 0, 0, 0, 0],
+  [0, 9, 0, 0, 1, 0, 0, 0, 0],
+  [8, 0, 2, 0, 3, 6, 7, 4, 0],
+  [3, 0, 7, 0, 2, 0, 0, 9, 0],
+  [4, 7, 0, 0, 0, 8, 0, 0, 1],
+  [0, 0, 1, 6, 0, 0, 0, 0, 9],
+  [2, 6, 9, 1, 4, 0, 3, 7, 0],
+];
+
 suite("UnitTests", () => {
   test("Logic handles a valid puzzle string of 81 characters", (done) => {
     const [puzzleString] = puzzlesAndSolutions[0];
@@ -45,20 +57,17 @@ suite("UnitTests", () => {
     done();
   });
 
-  test.skip("Logic handles a valid row placement", (done) => {
-    const [puzzleString] = puzzlesAndSolutions[0];
+  test("Logic handles a valid row placement", (done) => {
     const data = [
-      { row: "A", column: 2, value: 3 },
-      { row: "A", column: 4, value: 6 },
-      { row: "A", column: 4, value: 7 },
-      { row: "C", column: 4, value: 6 },
+      { row: 1, value: 8 },
+      { row: 2, value: 7 },
+      { row: 7, value: 5 },
     ];
 
     data.forEach((item) => {
       const result = solver.checkRowPlacement(
-        puzzleString,
+        parsedBoard,
         item.row,
-        item.column,
         item.value
       );
       assert.isTrue(result);
