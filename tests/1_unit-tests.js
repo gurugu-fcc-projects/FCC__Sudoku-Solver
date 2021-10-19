@@ -133,19 +133,16 @@ suite("UnitTests", () => {
     done();
   });
 
-  test.skip("Logic handles a valid region (3x3 grid) placement", (done) => {
-    const [puzzleString] = puzzlesAndSolutions[0];
+  test("Logic handles a valid region (3x3 grid) placement", (done) => {
     const data = [
-      { row: "A", column: 2, value: 7 },
-      { row: "B", column: 5, value: 4 },
-      { row: "D", column: 5, value: 4 },
-      { row: "F", column: 4, value: 9 },
-      { row: "H", column: 4, value: 9 },
+      { row: 1, column: 4, value: 4 },
+      { row: 2, column: 7, value: 6 },
+      { row: 8, column: 8, value: 8 },
     ];
 
     data.forEach((item) => {
       const result = solver.checkRegionPlacement(
-        puzzleString,
+        parsedBoard,
         item.row,
         item.column,
         item.value
@@ -156,19 +153,16 @@ suite("UnitTests", () => {
     done();
   });
 
-  test.skip("Logic handles an invalid region (3x3 grid) placement", (done) => {
-    const [puzzleString] = puzzlesAndSolutions[0];
+  test("Logic handles an invalid region (3x3 grid) placement", (done) => {
     const data = [
-      { row: "A", column: 2, value: 1 },
-      { row: "B", column: 5, value: 1 },
-      { row: "D", column: 5, value: 3 },
-      { row: "F", column: 4, value: 2 },
-      { row: "H", column: 4, value: 4 },
+      { row: 0, column: 0, value: 2 },
+      { row: 5, column: 5, value: 3 },
+      { row: 5, column: 8, value: 7 },
     ];
 
     data.forEach((item) => {
       const result = solver.checkRegionPlacement(
-        puzzleString,
+        parsedBoard,
         item.row,
         item.column,
         item.value
