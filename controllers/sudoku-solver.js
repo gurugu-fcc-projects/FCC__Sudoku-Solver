@@ -1,19 +1,4 @@
 class SudokuSolver {
-  constructor() {
-    this.rows = { A: 0, B: 1, C: 2, D: 3, E: 4, F: 5, G: 6, H: 7, I: 8 };
-    this.grid = [
-      { id: "ABC123", origin: ["A", 1] },
-      { id: "ABC456", origin: ["A", 4] },
-      { id: "ABC789", origin: ["A", 7] },
-      { id: "DEF123", origin: ["D", 1] },
-      { id: "DEF456", origin: ["D", 4] },
-      { id: "DEF789", origin: ["D", 7] },
-      { id: "GHI123", origin: ["G", 1] },
-      { id: "GHI456", origin: ["G", 4] },
-      { id: "GHI789", origin: ["G", 7] },
-    ];
-  }
-
   parseBoard(boardString) {
     let newBoard = boardString.replace(/\./g, "0");
     let boardArray = [];
@@ -67,7 +52,7 @@ class SudokuSolver {
     return parsedBoard.every((row) => row[column] !== value);
   }
 
-  checkRegionPlacement(puzzleString, row, column, value) {
+  checkRegionPlacement(parsedBoard, row, column, value) {
     let columnCorner = 0;
     let rowCorner = 0;
     let squareSize = 3;
@@ -85,7 +70,7 @@ class SudokuSolver {
     // check placement
     for (let i = rowCorner; i < rowCorner + squareSize; i++) {
       for (let j = columnCorner; j < columnCorner + squareSize; j++) {
-        if (puzzleString[i][j] === value) {
+        if (parsedBoard[i][j] === value) {
           return false;
         }
       }
@@ -94,72 +79,33 @@ class SudokuSolver {
     return true;
   }
 
+  checkValue(parsedBoard, column, row, value) {
+    return (
+      this.checkRowPlacement(parsedBoard, row, value) &&
+      this.checkColPlacement(parsedBoard, column, value) &&
+      this.checkRegionPlacement(parsedBoard, row, column, value)
+    );
+  }
+
   solve(puzzleString) {
+    // 1. validation
     const errors = [
       "Invalid puzzle string",
       "Expected puzzle to be 81 characters long",
       "Invalid characters in puzzle",
     ];
+
     const validation = this.validate(puzzleString);
 
     if (errors.includes(validation)) {
       return { error: validation };
     }
 
-    const puzzleArray = puzzleString.split("");
-    // const puzzleArray2 = puzzleString.split("").reduce(
-    //   (acc, item) => {
-    //     if (acc[acc.length - 1].length < 9) {
-    //       acc[acc.length - 1].push(item);
-    //       return acc;
-    //     } else {
-    //       return [...acc, [item]];
-    //     }
-    //   },
-    //   [[]]
-    // );
-    // const puzzleArray3 = [];
-    // for (let i = 0; i < puzzleString.length; i += 9) {
-    //   puzzleArray3.push(puzzleString.slice(i, i + 9).split(""));
-    // }
+    // 2. convert to array
+    const puzzleArray = this.parseBoard(puzzleString);
 
-    // for (let i = 0; i < puzzleArray.length; i++) {
-    //   const item = puzzleArray[i];
-
-    //   if (item === ".") {
-    //     const column = (i + 1) % 9 || 9;
-    //     const row = (i - (i % 9)) / 9;
-    //     const rowToLetter = Object.keys(this.rows).find(
-    //       (key) => this.rows[key] === row
-    //     );
-
-    //     for (let j = 1; j <= 9; j++) {
-    //       if (
-    //         this.checkRowPlacement(
-    //           puzzleArray.join(""),
-    //           rowToLetter,
-    //           column,
-    //           j
-    //         ) &&
-    //         this.checkColPlacement(
-    //           puzzleArray.join(""),
-    //           rowToLetter,
-    //           column,
-    //           j
-    //         ) &&
-    //         this.checkRegionPlacement(
-    //           puzzleArray.join(""),
-    //           rowToLetter,
-    //           column,
-    //           j
-    //         )
-    //       ) {
-    //         puzzleArray[i] = j;
-    //         break;
-    //       }
-    //     }
-    //   }
-    // }
+    // 3. get empty positions
+    const emptyPositions = this.saveEmptyPositions(puzzleArray);
 
     return { valid: true, solution: puzzleString };
   }

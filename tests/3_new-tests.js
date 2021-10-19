@@ -118,4 +118,12 @@ suite("Sudoku Solver", () => {
       expect(solver.checkRegionPlacement(parsedBoard, 8, 8, 8)).to.be.ok;
     });
   });
+
+  suite("#checkValue()", () => {
+    test("should check that value can be placed inside a board", () => {
+      expect(solver.checkValue(parsedBoard, 1, 0, 3)).to.be.ok;
+      expect(solver.checkValue(parsedBoard, 1, 0, 2)).to.not.be.ok;
+      expect(solver.checkValue(parsedBoard, 4, 6, 9)).to.be.ok;
+    });
+  });
 });
