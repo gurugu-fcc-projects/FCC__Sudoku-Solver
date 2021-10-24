@@ -88,7 +88,7 @@ class SudokuSolver {
   }
 
   solve(puzzleString) {
-    // 1. validation
+    // Validation
     const errors = [
       "Invalid puzzle string",
       "Expected puzzle to be 81 characters long",
@@ -101,13 +101,52 @@ class SudokuSolver {
       return { error: validation };
     }
 
-    // 2. convert to array
+    // Convert to array
     const puzzleArray = this.parseBoard(puzzleString);
 
-    // 3. get empty positions
+    // Get empty positions
     const emptyPositions = this.saveEmptyPositions(puzzleArray);
 
-    return { valid: true, solution: puzzleString };
+    // Variables to track our position in the solver
+    const limit = 9;
+    let row;
+    let column;
+    let value;
+    let found;
+
+    for (let i = 0; i < emptyPositions.length; ) {
+      row = emptyPositions[i][0];
+      column = emptyPositions[i][1];
+      // Try the next value
+      value = puzzleArray[row][column] + 1;
+      // Was a valid number found?
+      found = false;
+      // Keep trying new values until either the limit
+      // was reached or a valid value was found
+      while (!found && value <= limit) {
+        // If a valid value is found, mark found true,
+        // set the position to the value, and move to the
+        // next position
+        if (this.checkValue(puzzleArray, column, row, value)) {
+          found = true;
+          puzzleArray[row][column] = value;
+          i++;
+        }
+        // Otherwise, try the next value
+        else {
+          value++;
+        }
+      }
+      // If no valid value was found and the limit was
+      // reached, move back to the previous position
+      if (!found) {
+        puzzleArray[row][column] = 0;
+        i--;
+      }
+    }
+
+    // return the solution
+    return { valid: true, solution: puzzleArray.flat().join("") };
   }
 }
 

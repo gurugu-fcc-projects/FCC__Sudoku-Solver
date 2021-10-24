@@ -203,8 +203,11 @@ suite("UnitTests", () => {
   test("Solver returns the expected solution for an incomplete puzzle", (done) => {
     puzzlesAndSolutions.forEach((puzzleStrings) => {
       const result = solver.solve(puzzleStrings[0]);
+
       assert.property(result, "valid");
+      assert.isTrue(result.valid);
       assert.property(result, "solution");
+      assert.equal(result.solution, puzzleStrings[1]);
     });
 
     done();
