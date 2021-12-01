@@ -9,5 +9,9 @@ module.exports = function (app) {
     // puzzleString, coords, value
   });
 
-  app.route("/api/solve").post((req, res) => {});
+  app.route("/api/solve").post((req, res) => {
+    const result = solver.solve(req.body.puzzle);
+
+    res.json(result);
+  });
 };
