@@ -38,4 +38,27 @@ suite("Functional Tests", () => {
         done();
       });
   });
+
+  test("Solve a puzzle with invalid characters: POST request to /api/solve", (done) => {
+    const invalidPuzzleStrings = [
+      "1.5..2.84..63.12.7.2..5...,.9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.",
+      "1.5..2.84..63.12.7.2..5.....9..1....-.2.3674.3.7.2..9.47...8..1..16....926914.37.",
+      "1.5..2.84..63.12.7.2..5.....9..1....8.2.367fd3.7.2..9.47...8..1..16....926a14.37.",
+      "1.5..2.84..63.12.7.2..5.....9+1=10..8.2.3674.3.7.2..9.47...8..1..16....926914.37.",
+    ];
+
+    for (const puzzleString of invalidPuzzleStrings) {
+      chai
+        .request(server)
+        .post("/api/solve")
+        .send({ puzzle: puzzleString })
+        .end((err, res) => {
+          assert.isObject(res);
+          assert.property(res.body, "error");
+          assert.equal(res.body.error, "Invalid characters in puzzle");
+        });
+    }
+
+    done();
+  });
 });
