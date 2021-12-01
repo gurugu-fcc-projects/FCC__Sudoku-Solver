@@ -61,4 +61,28 @@ suite("Functional Tests", () => {
 
     done();
   });
+
+  test("Solve a puzzle with incorrect length: POST request to /api/solve", (done) => {
+    const invalidPuzzleStrings = [
+      "1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37",
+      "1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.2d",
+    ];
+
+    for (const puzzleString of invalidPuzzleStrings) {
+      chai
+        .request(server)
+        .post("/api/solve")
+        .send({ puzzle: puzzleString })
+        .end((err, res) => {
+          assert.isObject(res);
+          assert.property(res.body, "error");
+          assert.equal(
+            res.body.error,
+            "Expected puzzle to be 81 characters long"
+          );
+        });
+    }
+
+    done();
+  });
 });
