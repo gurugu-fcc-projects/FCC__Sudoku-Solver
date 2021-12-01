@@ -15,7 +15,6 @@ suite("Functional Tests", () => {
         .post("/api/solve")
         .send({ puzzle: item[0] })
         .end((err, res) => {
-          // console.log(res);
           assert.isObject(res);
           assert.property(res.body, "valid");
           assert.property(res.body, "solution");
@@ -25,5 +24,18 @@ suite("Functional Tests", () => {
     );
 
     done();
+  });
+
+  test("Solve a puzzle with missing puzzle string: POST request to /api/solve", (done) => {
+    chai
+      .request(server)
+      .post("/api/solve")
+      .send({})
+      .end((err, res) => {
+        assert.isObject(res);
+        assert.property(res.body, "error");
+        assert.equal(res.body.error, "Required field missing");
+        done();
+      });
   });
 });

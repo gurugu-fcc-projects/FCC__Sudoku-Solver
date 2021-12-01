@@ -10,8 +10,12 @@ module.exports = function (app) {
   });
 
   app.route("/api/solve").post((req, res) => {
-    const result = solver.solve(req.body.puzzle);
+    if (req.body?.puzzle) {
+      const result = solver.solve(req.body.puzzle);
 
-    res.json(result);
+      res.json(result);
+    } else {
+      res.json({ error: "Required field missing" });
+    }
   });
 };
