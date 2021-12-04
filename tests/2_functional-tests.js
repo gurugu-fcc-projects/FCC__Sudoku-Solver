@@ -85,4 +85,21 @@ suite("Functional Tests", () => {
 
     done();
   });
+
+  test("Solve a puzzle that cannot be solved: POST request to /api/solve", (done) => {
+    const unsolvablePuzzle =
+      "9.9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..";
+
+    chai
+      .request(server)
+      .post("/api/solve")
+      .send({ puzzle: unsolvablePuzzle })
+      .end((err, res) => {
+        assert.isObject(res);
+        assert.property(res.body, "error");
+        assert.equal(res.body.error, "Puzzle cannot be solved");
+      });
+
+    done();
+  });
 });

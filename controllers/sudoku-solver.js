@@ -113,14 +113,24 @@ class SudokuSolver {
     let column;
     let value;
     let found;
+    let valid = true;
 
     for (let i = 0; i < emptyPositions.length; ) {
+      // If puzzle is invalid, break from the loop
+      if (i < 0) {
+        valid = false;
+        break;
+      }
+
       row = emptyPositions[i][0];
       column = emptyPositions[i][1];
+
       // Try the next value
       value = puzzleArray[row][column] + 1;
+
       // Was a valid number found?
       found = false;
+
       // Keep trying new values until either the limit
       // was reached or a valid value was found
       while (!found && value <= limit) {
@@ -145,9 +155,19 @@ class SudokuSolver {
       }
     }
 
+    if (!valid) {
+      return { error: "Puzzle cannot be solved" };
+    }
+
     // return the solution
     return { valid: true, solution: puzzleArray.flat().join("") };
   }
 }
+
+const string =
+  "9.9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..";
+const solver = new SudokuSolver();
+
+solver.solve(string);
 
 module.exports = SudokuSolver;
