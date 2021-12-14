@@ -102,4 +102,40 @@ suite("Functional Tests", () => {
 
     done();
   });
+
+  test("Check a puzzle placement with all fields: POST request to /api/check", (done) => {
+    const puzzle =
+      "..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..";
+
+    chai
+      .request(server)
+      .post("/api/check")
+      .send({ puzzle, coordinate: "a1", value: 7 })
+      .end((err, res) => {
+        assert.isObject(res.body);
+        assert.property(res.body, "valid");
+        assert.equal(res.body.valid, true);
+      });
+
+    done();
+  });
+
+  test("Check a puzzle placement with single placement conflict: POST request to /api/check", (done) => {
+    const puzzle =
+      "..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..";
+
+    chai
+      .request(server)
+      .post("/api/check")
+      .send({ puzzle, coordinate: "a1", value: 3 })
+      .end((err, res) => {
+        assert.isObject(res.body);
+        assert.property(res.body, "valid");
+        assert.equal(res.body.valid, false);
+        assert.lengthOf(res.body.conflict, 1);
+        assert.equal(res.body.conflict[0], "region");
+      });
+
+    done();
+  });
 });
