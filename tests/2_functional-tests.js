@@ -196,16 +196,36 @@ suite("Functional Tests", () => {
 
   test("Check a puzzle placement with invalid characters: POST request to /api/check", (done) => {
     const puzzle =
-      "..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..";
+      "1.5..2.84..63.12.7.2..5.....9+1=10..8.2.3674.3.7.2..9.47...8..1..16....926914.37.";
 
     chai
       .request(server)
       .post("/api/check")
-      .send({ puzzle, value: 7 })
+      .send({ puzzle, coordinate: "a1", value: 7 })
       .end((err, res) => {
         assert.isObject(res.body);
         assert.property(res.body, "error");
-        assert.equal(res.body.error, "Required field(s) missing");
+        assert.equal(res.body.error, "Invalid characters in puzzle");
+      });
+
+    done();
+  });
+
+  test("Check a puzzle placement with incorrect length: POST request to /api/check", (done) => {
+    const puzzle =
+      "1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37";
+
+    chai
+      .request(server)
+      .post("/api/check")
+      .send({ puzzle, coordinate: "a1", value: 7 })
+      .end((err, res) => {
+        assert.isObject(res.body);
+        assert.property(res.body, "error");
+        assert.equal(
+          res.body.error,
+          "Expected puzzle to be 81 characters long"
+        );
       });
 
     done();

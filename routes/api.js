@@ -22,8 +22,11 @@ module.exports = function (app) {
 
     const validation = solver.validate(puzzle);
 
-    if (validation === "Invalid characters in puzzle") {
-      return res.json({ error: "Invalid characters in puzzle" });
+    if (
+      validation === "Invalid characters in puzzle" ||
+      validation === "Expected puzzle to be 81 characters long"
+    ) {
+      return res.json({ error: validation });
     }
 
     const parsedBoard = solver.parseBoard(puzzle);
