@@ -20,6 +20,12 @@ module.exports = function (app) {
       return res.json({ error: "Invalid value" });
     }
 
+    const validation = solver.validate(puzzle);
+
+    if (validation === "Invalid characters in puzzle") {
+      return res.json({ error: "Invalid characters in puzzle" });
+    }
+
     const parsedBoard = solver.parseBoard(puzzle);
     const [row, column] = coordinate.split("");
     const numberedRow = "abcdefghi".indexOf(row.toLowerCase());
