@@ -110,11 +110,11 @@ suite("Functional Tests", () => {
     chai
       .request(server)
       .post("/api/check")
-      .send({ puzzle, coordinate: "a1", value: 7 })
+      .send({ puzzle, coordinate: "a1", value: "7" })
       .end((err, res) => {
         assert.isObject(res.body);
         assert.property(res.body, "valid");
-        assert.equal(res.body.valid, true);
+        assert.isTrue(res.body.valid);
       });
 
     done();
@@ -127,7 +127,7 @@ suite("Functional Tests", () => {
     chai
       .request(server)
       .post("/api/check")
-      .send({ puzzle, coordinate: "a1", value: 3 })
+      .send({ puzzle, coordinate: "a1", value: "3" })
       .end((err, res) => {
         assert.isObject(res.body);
         assert.property(res.body, "valid");
@@ -146,7 +146,7 @@ suite("Functional Tests", () => {
     chai
       .request(server)
       .post("/api/check")
-      .send({ puzzle, coordinate: "a1", value: 1 })
+      .send({ puzzle, coordinate: "a1", value: "1" })
       .end((err, res) => {
         assert.isObject(res.body);
         assert.property(res.body, "valid");
@@ -165,7 +165,7 @@ suite("Functional Tests", () => {
     chai
       .request(server)
       .post("/api/check")
-      .send({ puzzle, coordinate: "a1", value: 5 })
+      .send({ puzzle, coordinate: "a1", value: "5" })
       .end((err, res) => {
         assert.isObject(res.body);
         assert.property(res.body, "valid");
@@ -184,7 +184,7 @@ suite("Functional Tests", () => {
     chai
       .request(server)
       .post("/api/check")
-      .send({ puzzle, value: 7 })
+      .send({ puzzle, value: "7" })
       .end((err, res) => {
         assert.isObject(res.body);
         assert.property(res.body, "error");
@@ -201,7 +201,7 @@ suite("Functional Tests", () => {
     chai
       .request(server)
       .post("/api/check")
-      .send({ puzzle, coordinate: "a1", value: 7 })
+      .send({ puzzle, coordinate: "a1", value: "7" })
       .end((err, res) => {
         assert.isObject(res.body);
         assert.property(res.body, "error");
@@ -218,7 +218,7 @@ suite("Functional Tests", () => {
     chai
       .request(server)
       .post("/api/check")
-      .send({ puzzle, coordinate: "a1", value: 7 })
+      .send({ puzzle, coordinate: "a1", value: "7" })
       .end((err, res) => {
         assert.isObject(res.body);
         assert.property(res.body, "error");
