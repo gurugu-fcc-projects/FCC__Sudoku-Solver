@@ -35,6 +35,13 @@ module.exports = function (app) {
     const [row, column] = coordinate.split("");
     const numberedRow = "abcdefghi".indexOf(row.toLowerCase());
 
+    const isValueAlreadyPlaced = solver.checkValuePlacement(
+      parsedBoard,
+      numberedRow,
+      column - 1,
+      parsedNumber
+    );
+
     const isRowValid = solver.checkRowPlacement(
       parsedBoard,
       numberedRow,
@@ -58,7 +65,10 @@ module.exports = function (app) {
       isRegionValid ? null : "region",
     ].filter((conflict) => conflict);
 
-    if (isRowValid && isColumnValid && isRegionValid) {
+    if (
+      (isRowValid && isColumnValid && isRegionValid) ||
+      isValueAlreadyPlaced
+    ) {
       res.json({ valid: true });
     } else {
       res.json({ valid: false, conflict });

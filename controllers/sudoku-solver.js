@@ -44,6 +44,10 @@ class SudokuSolver {
     }
   }
 
+  checkValuePlacement(parsedBoard, row, column, value) {
+    return parsedBoard[row][column] === value;
+  }
+
   checkRowPlacement(parsedBoard, row, value) {
     return !parsedBoard[row].includes(value);
   }

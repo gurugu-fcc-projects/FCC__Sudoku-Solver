@@ -230,4 +230,21 @@ suite("Functional Tests", () => {
 
     done();
   });
+
+  test("Check a puzzle placement with correct value already placed: POST request to /api/check", (done) => {
+    const puzzle =
+      "7.9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..";
+
+    chai
+      .request(server)
+      .post("/api/check")
+      .send({ puzzle, coordinate: "a1", value: "7" })
+      .end((err, res) => {
+        assert.isObject(res.body);
+        assert.property(res.body, "valid");
+        assert.isTrue(res.body.valid);
+      });
+
+    done();
+  });
 });
