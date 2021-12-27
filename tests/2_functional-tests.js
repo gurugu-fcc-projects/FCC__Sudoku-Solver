@@ -247,4 +247,25 @@ suite("Functional Tests", () => {
 
     done();
   });
+
+  test("Check a puzzle placement with an invalid value: POST request to /api/check", (done) => {
+    const puzzle =
+      "7.9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..";
+
+    const invalidValues = [-4, 10, 1212, "12312", "X", "y"];
+
+    for (const invalidValue of invalidValues) {
+      chai
+        .request(server)
+        .post("/api/check")
+        .send({ puzzle, coordinate: "a1", value: invalidValue })
+        .end((err, res) => {
+          assert.isObject(res.body);
+          assert.property(res.body, "error");
+          assert.equal(res.body.error, "Invalid value");
+        });
+    }
+
+    done();
+  });
 });

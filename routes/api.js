@@ -18,7 +18,7 @@ module.exports = function (app) {
 
     const parsedNumber = Number(value);
 
-    if (typeof parsedNumber !== "number" || parsedNumber > 9) {
+    if (isNaN(parsedNumber) || parsedNumber > 9 || parsedNumber < 1) {
       return res.json({ error: "Invalid value" });
     }
 
